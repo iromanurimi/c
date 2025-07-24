@@ -94,7 +94,7 @@
 
   .error-text {
     color: #D32F2F;
-    font-size: 0.95rem;
+    font-size: 1rem;
     margin: 0;
     flex-grow: 1;
     font-family: 'Quicksand', sans-serif;
@@ -228,8 +228,7 @@
         animation: gradientShift 4s linear infinite,
         heroPulse 0s ease-in-out infinite;
         transform-origin: center;
-        border-bottom-left-radius: 2rem ;
-        border-bottom-right-radius: 2rem;
+    
         
     }
 
@@ -237,16 +236,16 @@
        
         
        .container-tracker{
-         background: rgba(255, 255, 255, 0.12); 
+         
         backdrop-filter: blur(10px);
-        border-radius: 1rem;
+        
         max-width: 90%;
         width:100%;
         color: var(--white);
         text-align: center;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); 
+        
         padding: 2rem 1.2rem;
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        
        } 
         .tracker-hero h1 {
             color: var(--white);
