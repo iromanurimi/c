@@ -238,9 +238,6 @@
        .container-tracker{
          
         backdrop-filter: blur(10px);
-        
-        max-width: 90%;
-        width:100%;
         color: var(--white);
         text-align: center;
         
