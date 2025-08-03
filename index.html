@@ -12,13 +12,94 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Modern fonts -->
     <link href="https://fonts.googleapis.com/css2?family=lato:wght@400;500;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
     
+    <!-- <style>
+        /* Updated drawer menu styles */
+        .mobile-menu-container {
+            width: 280px; /* Slightly wider for better readability */
+        }
+        
+        .mobile-menu {
+            padding: 1rem;
+        }
+        
+        .drawer-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .drawer-menu-item:hover,
+        .drawer-menu-item.active {
+            background-color: var(--primary-light);
+            color: var(--accent);
+        }
+        
+        .drawer-menu-item i {
+            width: 24px;
+            text-align: center;
+            margin-right: 16px;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+        
+        .drawer-menu-item span {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
+        /* Bottom navigation styles */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 10px 0;
+        }
+        
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 10px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.75rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .bottom-nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+            color: var(--secondary);
+        }
+        
+        .bottom-nav-item:hover,
+        .bottom-nav-item.active {
+            background-color: var(--primary-light);
+        }
+        
+        .bottom-nav-item:hover i,
+        .bottom-nav-item.active i {
+            color: var(--accent);
+        }
+    </style> -->
 </head>
 <body>
     <hide class="main-content">
     <!-- Navigation Bar [Menu] -->
-
     <nav class="navbar">
         <a href="index.html" class="logo">
             <img src="logon.svg" alt="Logo"> <label for="">Ciki da Raino</label>
@@ -27,8 +108,8 @@
             <li><a href="index.html">Shafin Gida</a></li>
             <li><a class="disabled" href="blog.html">Shirin Daukar Ciki</a></li>
             <li><a class="disabled" href="blog.html">Goyon Ciki</a></li>
-            <li><a class="disabled" href="contact.html">Tuntuɓe Mu</a></li>
-            <li><a class="disabled" href="about.html">Game Da Mu</a></li>
+            <li><a href="contact.html">Tuntuɓe Mu</a></li>
+            <li><a href="about.html">Game Da Mu</a></li>
             <li><a href="hosapital.html">Asibiti Mafi Kusa</a></li>
         </ul>
         <button class="hamburger" id="hamburger" aria-label="Open menu">
@@ -39,37 +120,52 @@
     </nav>
     
     <!-- Mobile Menu [Menu na wayar hannu] -->
-<div class="overlay" id="overlay"></div>
-<div class="mobile-menu-container" id="mobile-menu-container">
-    <div class="mobile-menu-header">
-        <button class="close-menu" id="close-menu" aria-label="Close menu">
-            <i class="fas fa-times"></i>
-        </button>
+    <div class="overlay" id="overlay"></div>
+    <div class="mobile-menu-container" id="mobile-menu-container">
+        <div class="mobile-menu-header">
+            <button class="close-menu" id="close-menu" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-menu">
+            <a href="index.html" class="drawer-menu-item">
+                <i class="fas fa-home"></i>
+                <span>Shafin Gida</span>
+            </a>
+            <a href="ovulation.html" class="drawer-menu-item">
+                <i class="fas fa-venus-mars"></i>
+                <span>Kalkuletar Ovulation</span>
+            </a>
+            <a href="tracker.html" class="drawer-menu-item">
+                <i class="fas fa-baby-carriage"></i>
+                <span>Bibiyar Ciki</span>
+            </a>
+            <a href="hospital.html" class="drawer-menu-item">
+                <i class="fas fa-hospital"></i>
+                <span>Asibitoci Mafi Kusa</span>
+            </a>
+        </div>
     </div>
-    <div class="mobile-menu">
-        <!-- Main menu content can go here if needed -->
-    </div>
-    
+
     <!-- Bottom Navigation Bar -->
-    <div class="bottom-nav">
-        <a href="index.html" class="nav-item">
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav-item">
             <i class="fas fa-home"></i>
-            <span>Shafin Gida</span>
+            <span>Gida</span>
         </a>
-        <a href="ovulation.html" class="nav-item">
+        <a href="ovulation.html" class="bottom-nav-item">
             <i class="fas fa-venus-mars"></i>
             <span>Ovulation</span>
         </a>
-        <a href="tracker.html" class="nav-item">
+        <a href="tracker.html" class="bottom-nav-item">
             <i class="fas fa-baby-carriage"></i>
             <span>Bibiyar Ciki</span>
         </a>
-        <a href="hospital.html" class="nav-item">
-            <i class="fas fa-hospital-user"></i>
+        <a href="hospital.html" class="bottom-nav-item">
+            <i class="fas fa-hospital"></i>
             <span>Asibiti</span>
         </a>
-    </div>
-</div>
+    </nav>
  
     <!-- Hero Section -->
     <section class="hero" data-aos="fade">
@@ -93,7 +189,7 @@
     </section>
 
     <!-- Partners Section -->
-    <section class="partners" data-aos="fade">
+    <section class="partners" data-aos="fade" style="display: none;">
         <div class="partners-container">
             <h2 class="section-title"><i class="fas fa-handshake"></i> Masu Daukar Nauyi</h2>
             <p class="section-subtitle">Mun yi aiki tare da manyan ƙungiyoyi don samar da ingantaccen bayani</p>
@@ -158,7 +254,7 @@
         </div>
     </section>
     
-    <!-- Articles Section -->
+    Articles Section
     <section class="articles" id="articles" data-aos="fade-up" style="display: none;">
 
             <h2 class="section-title"><i class="fas fa-newspaper"></i> Sabbin Makaloli</h2>
@@ -210,7 +306,7 @@
     </section>
     
     <!-- Testimonials Section -->
-    <section class="testimonials" data-aos="fade-up">
+    <section class="testimonials" data-aos="fade-up" style="display: none;">
         <div class="container">
             <h2 class="section-title"><i class="fas fa-quote-left"></i> Ra'ayin Mabiyanmu</h2>
             <p class="section-subtitle">Abin da wasu mutane ke faɗa game da wannan manhaja</p>
@@ -273,7 +369,7 @@
     </section>
     
     <!-- FAQ Section -->
-    <section class="faq" id="faq" data-aos="fade-up">
+    <section class="faq" id="faq" data-aos="fade-up" style="display: none;">
         <div class="container">
             <h2 class="section-title"><i class="fas fa-question-circle"></i> Tambayoyin Da Aka Fi Yawan Yi</h2>
             <p class="section-subtitle">Anan akwai amsoshin tambayoyin da aka fi yawan yi mana</p>
