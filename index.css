@@ -261,14 +261,14 @@ img {
     background: var(--surface);
     box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
     z-index: 999;
-    padding: 10px 5px;
+    padding: 10px 40px;
 }
 
 .bottom-nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 6px 8px;
+    padding: 6px 10px;
     color: var(--text);
     text-decoration: none;
     font-size: 0.75rem;
@@ -279,7 +279,7 @@ img {
 .bottom-nav-item i {
     font-size: 1.2rem;
     margin-bottom: 4px;
-    color: var(--success);
+    /* color: var(--secondary); */
 }
 
 .bottom-nav-item:hover,
