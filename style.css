@@ -256,7 +256,7 @@
     font-weight: 700;
     color: var(--primary);
     margin-bottom: 5px; /* Reduced from 15px */
-    text-align: left;
+    text-align: center;
 }
 
 .month-display {
@@ -2678,8 +2678,10 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--card-shadow);
   border: 1px solid rgba(0, 0, 0, 0.03);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  position: relative;
+  position: relative; 
+  text-align: center;
   overflow: hidden;
+
 }
 
 .tracker-card:hover {
@@ -2696,6 +2698,8 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
+  margin-left: 45%;
+  margin-right: 45%;
   font-size: 1.2rem;
   color: var(--white);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -2704,6 +2708,7 @@ h1, h2, h3, h4, h5, h6 {
 .due-date-card .card-icon {
   background: linear-gradient(135deg, var(--secondary), #FF8E9E);
 }
+
 
 .progress-card .card-icon {
   background: linear-gradient(135deg, var(--primary-dark), #8580FF);
@@ -2809,7 +2814,7 @@ h1, h2, h3, h4, h5, h6 {
   padding-left: 25px;
   position: relative;
   font-size: 0.95rem;
-  color: var(--text);
+  color: var(--white);
 }
 
 .baby-milestones li:before {
@@ -2825,6 +2830,7 @@ h1, h2, h3, h4, h5, h6 {
 .visual-progress-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 30px;
   margin-top: 30px;
   padding-top: 30px;
@@ -2942,7 +2948,7 @@ h1, h2, h3, h4, h5, h6 {
   
   .baby-size {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
   
   .baby-tracker-container {
@@ -2972,53 +2978,55 @@ h1, h2, h3, h4, h5, h6 {
   background: linear-gradient(135deg, var(--success), #4AE0F0);
 }
 
+.health-tip-Ovul p{
+      color: white;
+}
 .health-tip-Ovul{
-  background: linear-gradient(to right, var(--light), var(--white));
+  background: linear-gradient(135deg, var(--primary-dark), #8580FF);
+  opacity: 10px;
   padding: 18px;
   border-radius: 12px;
   margin-bottom: 20px;
   font-size: 0.95rem;
-  color: var(--text);
+  color: white;
   line-height: 1.6;
-  border-left: 4px solid var(--primary-dark);
-  border-right: 4px solid var(--primary-dark);
   box-shadow: 0 2px 8px rgba(76, 201, 240, 0.1);
 }
 
+.health-tip-fertile p{
+ color:white ;
+}
 .health-tip-fertile{
-  background: linear-gradient(to right, var(--light), var(--white));
+  background: linear-gradient(135deg, var(--accent), #00D3A9);
   padding: 18px;
   border-radius: 12px;
   margin-bottom: 20px;
   font-size: 0.95rem;
-  color: var(--text);
   line-height: 1.6;
-  border-right: 4px solid var(--accent);
-  border-left: 4px solid var(--accent);
+  color:white ;
   box-shadow: 0 2px 8px rgba(76, 201, 240, 0.1);
 }
 .health-tip-period{
-  background: linear-gradient(to right, var(--light), var(--white));
+   background: linear-gradient(135deg, var(--secondary), #FF8E9E);
   padding: 18px;
   border-radius: 12px;
   margin-bottom: 20px;
   font-size: 0.95rem;
-  color: var(--text);
+  color: var(--white);
   line-height: 1.6;
-  border-left: 4px solid var(--secondary-dark);
-  border-right: 4px solid var(--secondary-dark);
   box-shadow: 0 2px 8px rgba(76, 201, 240, 0.1);
 }
+.health-tip p{
+    color: var(--white);
+}
 .health-tip {
-  background: linear-gradient(to right, var(--light), var(--white));
+  background: linear-gradient(135deg, var(--success), #4AE0F0);
   padding: 18px;
   border-radius: 12px;
   margin-bottom: 20px;
   font-size: 0.95rem;
-  color: var(--text);
+  
   line-height: 1.6;
-  border-right: 4px solid var(--success);
-  border-left: 4px solid var(--success);
   box-shadow: 0 2px 8px rgba(76, 201, 240, 0.1);
 }
 
@@ -3269,7 +3277,7 @@ h1, h2, h3, h4, h5, h6 {
             
             .baby-size {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
             }
         }
    
