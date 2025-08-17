@@ -2698,8 +2698,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
-  margin-left: 45%;
-  margin-right: 45%;
+  margin-left: 40%;
   font-size: 1.5rem;
   color: var(--white);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -3281,3 +3280,4 @@ h1, h2, h3, h4, h5, h6 {
             }
         }
    
+
