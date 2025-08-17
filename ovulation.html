@@ -202,9 +202,10 @@
                         </h3>
                         <div class="week-display" id="ovulation-day">May 1, 2024</div>
                         <div class="health-tip-Ovul">
-                          <p>Wannan ita ce ranar da kwai ke fita daga ovary zuwa bututu fallopian, 
-                            kuma wannan lokaci ne mafi 
-                            dacewa ga mace ta samu ciki.</p>
+                          <p>Wannan ranar da ke sama, ita ce ranar Ovulation (Ma'ana ranar da 
+                            kwai ke fita daga ovary zuwa bututu fallopian). 
+                            Kuma wannan lokaci shi ne mafi 
+                            dacewa ga 'ya mace ta samu ciki.</p>
                         </div>
                     </div>
                 </div>
@@ -220,12 +221,12 @@
                                  <i class="fas fa-info-circle"></i>
                             </span>
                         </h3>
-                        <div class="baby-size">
+                        
                         <div class="due-date size-comparison" id="fertile-window">May 15, 2024</div>
 
-                        </div>
                         <div class="baby-milestones">
-                            <div class="health-tip-fertile">Lokutan da ya fi dacewa a yawaita jima'i don samun juna biyu a cikinsu.</div>
+                            <div class="health-tip-fertile">Lokutan da ya fi dacewa a yawaita jima'i don 
+                                samun juna biyu a cikinsu.</div>
 
 
 
@@ -565,7 +566,7 @@ calculateBtn.addEventListener('click', function() {
         const testDate = new Date(nextPeriodDate);
         testDate.setDate(testDate.getDate() + 2); // Day after expected period
         document.getElementById('test-date-info').textContent = 
-            `Ranar (${formatDate(testDate)}) ita ce ranar da ta fi dacewa ayi gwajin ciki a cikinta, bayan an fuskanci rashin zuwan al'ada domin samu mafi ingantaccin sakamako.`;
+            ` Idan ya kasance jinin al'adarki bai zo mi ki ba, to ranar (${formatDate(testDate)}) ita ce ranar da ta fi dacewa ki yi gwajin ciki domin samun tabbacin ko kin samu ciki a watan.`;
         
         // Calculate cycle progress
         const daysPassed = Math.floor((today - lastPeriod) / (1000 * 60 * 60 * 24));
@@ -577,7 +578,7 @@ calculateBtn.addEventListener('click', function() {
         // Update countdown to next period
         const daysRemaining = cycleLength - daysPassed;
         document.getElementById('period-countdown').textContent = 
-            `Kusan kwanaki ${daysRemaining} suka rage a sake ganin wata al'adar daga yau.`;
+            `Akalla kwanaki ${daysRemaining} suka rage mi ki don sake ganin wani sabon jinin al'adar daga yau.`;
         
         // Update timeline marker
         document.querySelector('.timeline-marker').style.left = `${percentComplete}%`;
