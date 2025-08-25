@@ -6,9 +6,8 @@
     <title>Ciki da Raino - Kasuwa</title>
     <!-- Preload resources -->
     <link rel="preload" href="css/style.css" as="style">
-     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="index.css">
-   
     <!-- AOS CSS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Font Awesome -->
@@ -436,12 +435,11 @@
     </nav>
 
     <!-- Marketplace Hero Section -->
-    
-     <section class="tracker-hero" data-aos="fade">
+    <section class="tracker-hero" data-aos="fade">
         <div class="container-tracker">
-             <h1>Kasuwar Ciki da Raino</h1>
+            <h1>Kasuwar Ciki da Raino</h1>
             <p>Samu kayayyaki masu dorewa da inganci domin uwa da jariri. Siyayya ta hanyar WhatsApp cikin sauƙi.</p>
-        
+       
         </div>
     </section>
 
@@ -705,7 +703,7 @@
     </div>
 
     <!-- Footer -->
-    <!-- <footer class="footer">
+    <footer class="footer">
         <div class="footer-content">
             <div class="footer-grid">
                 <div class="footer-about">
@@ -753,7 +751,7 @@
             </div>
         </div>
     </footer>
-    </div> -->
+    </div>
 
 <!-- JavaScript -->
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -1054,6 +1052,11 @@
         if (event.target === modal) {
             closeProductModal();
         }
+    });
+
+    // Initialize the product filtering on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        filterProducts();
     });
 </script>
 </body>
