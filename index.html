@@ -3,558 +3,1828 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shafin Gida | Ciki da Raino</title>
-    <!-- Preload resources -->
-    <link rel="preload" href="css/style.css" as="style">
-    <!-- AOS CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Modern fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=lato:wght@400;500;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="index.css">
-    
-    <!-- <style>
-        /* Updated drawer menu styles */
-        .mobile-menu-container {
-            width: 280px; /* Slightly wider for better readability */
+    <title>Bloom - Feminine Health Tracker</title>
+    <meta name="description" content="Track your cycle, ovulation, pregnancy and find healthcare providers">
+    <meta name="theme-color" content="#8a7fcc">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8a7fcc;
+            --secondary: #6bc5c1;
+            --accent: #f5a9b8;
+            --light: #f8f5ff;
+            --dark: #333344;
+            --text: #444466;
+            --period: #ff6b6b;
+            --fertile: #6bcf7f;
+            --ovulation: #6bb5ff;
+            --safe: #ccccdd;
+            --pregnancy: #e394ff;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            --transition: all 0.3s ease;
         }
-        
-        .mobile-menu {
-            padding: 1rem;
+
+        .dark-mode {
+            --primary: #9d92e0;
+            --secondary: #7ad5d1;
+            --accent: #ffb6c1;
+            --light: #2a2a3a;
+            --dark: #f0f0ff;
+            --text: #e0e0ff;
+            --safe: #444455;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-        
-        .drawer-menu-item {
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            transition: var(--transition);
+            max-width: 500px;
+            margin: 0 auto;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .app-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 16px 10px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
-            padding: 12px 16px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            color: var(--text);
-            text-decoration: none;
-            transition: all 0.3s ease;
+            gap: 8px;
         }
-        
-        .drawer-menu-item:hover,
-        .drawer-menu-item.active {
-            background-color: var(--primary-light);
-            color: var(--accent);
+
+        .logo i {
+            font-size: 1.3rem;
         }
-        
-        .drawer-menu-item i {
-            width: 24px;
-            text-align: center;
-            margin-right: 16px;
+
+        .theme-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .daily-tip {
+            background: rgba(255,255,255,0.2);
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .dark-mode .card {
+            background: var(--dark);
+        }
+
+        .card-title {
             font-size: 1.1rem;
-            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        
-        .drawer-menu-item span {
-            font-size: 0.95rem;
+
+        /* Homepage Features */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        /* Input Screen */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
             font-weight: 500;
         }
-        
-        /* Bottom navigation styles */
-        .bottom-nav {
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .dark-mode .input-field {
+            background: var(--light);
+            color: var(--text);
+            border-color: #555566;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(138, 127, 204, 0.2);
+        }
+
+        .input-error {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
             display: flex;
-            justify-content: space-around;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background: #7a6bc5;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        /* Prediction Screen */
+        .prediction-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .prediction-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .prediction-card.ovulation {
+            background: rgba(107, 181, 255, 0.1);
+            border: 1px solid rgba(107, 181, 255, 0.3);
+        }
+
+        .prediction-card.fertile {
+            background: rgba(107, 207, 127, 0.1);
+            border: 1px solid rgba(107, 207, 127, 0.3);
+        }
+
+        .prediction-card.pregnancy {
+            background: rgba(227, 148, 255, 0.1);
+            border: 1px solid rgba(227, 148, 255, 0.3);
+        }
+
+        .prediction-date {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 8px 0;
+        }
+
+        .prediction-label {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        /* Calendar */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .calendar-nav {
+            background: var(--light);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .calendar-nav:hover {
+            background: #e0e0f0;
+        }
+
+        .calendar-month {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .calendar-day.period {
+            background: var(--period);
+            color: white;
+        }
+
+        .calendar-day.fertile {
+            background: var(--fertile);
+            color: white;
+        }
+
+        .calendar-day.ovulation {
+            background: var(--ovulation);
+            color: white;
+        }
+
+        .calendar-day.safe {
+            background: var(--safe);
+        }
+
+        .calendar-day.pregnancy {
+            background: var(--pregnancy);
+            color: white;
+        }
+
+        .calendar-day.today {
+            border: 2px solid var(--primary);
+        }
+
+        .calendar-day.other-month {
+            color: #aaa;
+        }
+
+        /* Tracking */
+        .tracking-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .track-option {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .track-option.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .track-option i {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .track-notes {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            resize: none;
+            min-height: 100px;
+            margin-top: 16px;
+        }
+
+        .dark-mode .track-notes {
+            background: var(--light);
+            color: var(--text);
+            border-color: #555566;
+        }
+
+        /* Pregnancy Tracker */
+        .pregnancy-progress {
+            margin: 20px 0;
+        }
+
+        .pregnancy-weeks {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .current-week {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .total-weeks {
+            color: var(--text);
+            opacity: 0.7;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--safe);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--pregnancy), var(--accent));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .trimester-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .trimester {
+            text-align: center;
+            padding: 12px;
+            border-radius: 12px;
+            background: var(--light);
+        }
+
+        .trimester.active {
+            background: var(--pregnancy);
+            color: white;
+        }
+
+        .trimester-number {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        .trimester-weeks {
+            font-size: 0.85rem;
+        }
+
+        /* Hospital Locator */
+        .hospital-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .hospital-item {
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dark-mode .hospital-item {
+            border-bottom-color: #444455;
+        }
+
+        .hospital-item:last-child {
+            border-bottom: none;
+        }
+
+        .hospital-item:hover {
+            background: var(--light);
+        }
+
+        .hospital-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--primary);
+        }
+
+        .hospital-distance {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .hospital-address {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .hospital-phone {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+        }
+
+        /* Settings */
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dark-mode .setting-item {
+            border-bottom-color: #444455;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: var(--transition);
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Reports */
+        .chart-container {
+            height: 200px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .chart {
+            display: flex;
+            align-items: flex-end;
+            height: 100%;
+            gap: 8px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: var(--secondary);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .chart-bar.period {
+            background: var(--period);
+        }
+
+        .chart-bar.fertile {
+            background: var(--fertile);
+        }
+
+        .chart-bar.ovulation {
+            background: var(--ovulation);
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--surface);
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-            padding: 10px 0;
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 100;
         }
-        
-        .bottom-nav-item {
+
+        .dark-mode .bottom-nav {
+            background: var(--dark);
+        }
+
+        .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 6px 10px;
-            color: var(--text);
-            text-decoration: none;
-            font-size: 0.75rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            gap: 4px;
+            color: #aaa;
+            cursor: pointer;
+            transition: var(--transition);
+            flex: 1;
         }
-        
-        .bottom-nav-item i {
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
             font-size: 1.2rem;
+        }
+
+        .nav-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        /* Cycle Progress */
+        .cycle-progress {
+            margin-top: 10px;
+        }
+
+        .cycle-days {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .current-day {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .total-days {
+            color: var(--text);
+            opacity: 0.7;
+        }
+
+        /* Legend */
+        .legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .legend-color.period {
+            background: var(--period);
+        }
+
+        .legend-color.fertile {
+            background: var(--fertile);
+        }
+
+        .legend-color.ovulation {
+            background: var(--ovulation);
+        }
+
+        .legend-color.safe {
+            background: var(--safe);
+        }
+
+        .legend-color.pregnancy {
+            background: var(--pregnancy);
+        }
+
+        /* Reminders */
+        .reminder-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dark-mode .reminder-item {
+            border-bottom-color: #444455;
+        }
+
+        .reminder-item:last-child {
+            border-bottom: none;
+        }
+
+        .reminder-date {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Insights */
+        .insight-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dark-mode .insight-item {
+            border-bottom-color: #444455;
+        }
+
+        .insight-item:last-child {
+            border-bottom: none;
+        }
+
+        .insight-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .insight-title {
+            font-weight: 600;
             margin-bottom: 4px;
-            color: var(--secondary);
         }
-        
-        .bottom-nav-item:hover,
-        .bottom-nav-item.active {
-            background-color: var(--primary-light);
+
+        .insight-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
-        
-        .bottom-nav-item:hover i,
-        .bottom-nav-item.active i {
-            color: var(--accent);
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-    </style> -->
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            .prediction-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tracking-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <hide class="main-content">
-    <!-- Navigation Bar [Menu] -->
-    <nav class="navbar">
-        <a href="index.html" class="logo">
-            <img src="logon.svg" alt="Logo"> <label for="">Ciki da Raino</label>
-        </a>
-        <ul class="nav-links">
-            <li><a href="index.html">Shafin Gida</a></li>
-            <li><a class="disabled" href="blog.html">Shirin Daukar Ciki</a></li>
-            <li><a class="disabled" href="blog.html">Goyon Ciki</a></li>
-            <li><a href="contact.html">Tuntuɓe Mu</a></li>
-            <li><a href="about.html">Game Da Mu</a></li>
-            <li><a href="hosapital.html">Asibiti Mafi Kusa</a></li>
-        </ul>
-        <button class="hamburger" id="hamburger" aria-label="Open menu">
-            <div class="hamburger-line"></div>
-            <div class="hamburger-line"></div>
-            <div class="hamburger-line"></div>
-        </button>
-    </nav>
-    
-    <!-- Mobile Menu [Menu na wayar hannu] -->
-    <div class="overlay" id="overlay"></div>
-    <div class="mobile-menu-container" id="mobile-menu-container">
-        <div class="mobile-menu-header">
-            <button class="close-menu" id="close-menu" aria-label="Close menu">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="mobile-menu">
-            <a href="index.html" class="drawer-menu-item">
-                <i class="fas fa-home"></i>
-                <span>Shafin Gida</span>
-            </a>
-            <a href="ovulation.html" class="drawer-menu-item">
-                <i class="fas fa-venus-mars"></i>
-                <span>Kalkuletar Ovulation</span>
-            </a>
-            <a href="tracker.html" class="drawer-menu-item">
-                <i class="fas fa-baby-carriage"></i>
-                <span>Bibiyar Ciki</span>
-            </a>
-            <a href="hospital.html" class="drawer-menu-item">
-                <i class="fas fa-hospital"></i>
-                <span>Asibitoci Mafi Kusa</span>
-            </a>
-        </div>
+    <div class="app-container">
+        <header>
+            <div class="header-top">
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <span>Bloom</span>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <div class="daily-tip" id="dailyTip">
+                <i class="fas fa-lightbulb"></i> Today's tip: Stay hydrated to help reduce bloating during your period.
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Home Screen -->
+            <div class="screen active" id="homeScreen">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-heart"></i> Welcome to Bloom
+                    </h2>
+                    <p>Your complete feminine health companion. Track your cycle, monitor your pregnancy, and find healthcare providers.</p>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-card" data-screen="ovulationScreen">
+                            <div class="feature-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="feature-title">Cycle Tracker</div>
+                            <div class="feature-desc">Track periods & ovulation</div>
+                        </div>
+                        <div class="feature-card" data-screen="pregnancyScreen">
+                            <div class="feature-icon">
+                                <i class="fas fa-baby"></i>
+                            </div>
+                            <div class="feature-title">Pregnancy Tracker</div>
+                            <div class="feature-desc">Week-by-week guidance</div>
+                        </div>
+                        <div class="feature-card" data-screen="hospitalScreen">
+                            <div class="feature-icon">
+                                <i class="fas fa-hospital"></i>
+                            </div>
+                            <div class="feature-title">Hospital Locator</div>
+                            <div class="feature-desc">Find nearby care</div>
+                        </div>
+                        <div class="feature-card" data-screen="reportsScreen">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="feature-title">Health Reports</div>
+                            <div class="feature-desc">Insights & analytics</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-bell"></i> Quick Overview
+                    </h2>
+                    <div class="prediction-grid">
+                        <div class="prediction-card ovulation">
+                            <i class="fas fa-egg"></i>
+                            <div class="prediction-date" id="homeOvulationDate">Oct 18</div>
+                            <div class="prediction-label">Ovulation Day</div>
+                        </div>
+                        <div class="prediction-card pregnancy">
+                            <i class="fas fa-baby"></i>
+                            <div class="prediction-date" id="homePregnancyWeek">Week 12</div>
+                            <div class="prediction-label">Pregnancy Progress</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ovulation Calculator Screen -->
+            <div class="screen" id="ovulationScreen">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-calculator"></i> Cycle Calculator
+                    </h2>
+                    <div class="input-group">
+                        <label class="input-label">Last Period Start Date</label>
+                        <input type="date" class="input-field" id="lastPeriodDate">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Cycle Length (21-35 days)</label>
+                        <input type="number" class="input-field" id="cycleLength" min="21" max="35" value="28">
+                        <div class="input-error" id="cycleLengthError">Cycle length must be between 21-35 days</div>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Period Length (days)</label>
+                        <input type="number" class="input-field" id="periodLength" min="3" max="10" value="5">
+                    </div>
+                    <button class="btn" id="calculateCycle">
+                        <i class="fas fa-calculator"></i> Calculate Cycle
+                    </button>
+                </div>
+
+                <div class="card" id="cycleResults" style="display: none;">
+                    <h2 class="card-title">
+                        <i class="fas fa-chart-line"></i> Your Cycle Predictions
+                    </h2>
+                    <div class="prediction-grid">
+                        <div class="prediction-card ovulation">
+                            <i class="fas fa-egg"></i>
+                            <div class="prediction-date" id="ovulationDate">Oct 18</div>
+                            <div class="prediction-label">Ovulation Day</div>
+                        </div>
+                        <div class="prediction-card fertile">
+                            <i class="fas fa-heart"></i>
+                            <div class="prediction-date" id="fertileWindow">Oct 14-19</div>
+                            <div class="prediction-label">Fertile Window</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cycle-progress">
+                        <div class="cycle-days">
+                            <span class="current-day" id="currentCycleDay">Day 12</span>
+                            <span class="total-days" id="totalCycleDays">of 28</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="cycleProgress" style="width: 42%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-calendar-alt"></i> Cycle Calendar
+                    </h2>
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prevMonth">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="calendar-month" id="currentMonthYear">October 2023</div>
+                        <button class="calendar-nav" id="nextMonth">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div class="calendar-days" id="calendarDays">
+                        <!-- Calendar days will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pregnancy Tracker Screen -->
+            <div class="screen" id="pregnancyScreen">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-baby"></i> Pregnancy Tracker
+                    </h2>
+                    <div class="input-group">
+                        <label class="input-label">Last Menstrual Period (LMP)</label>
+                        <input type="date" class="input-field" id="lmpDate">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Or Due Date</label>
+                        <input type="date" class="input-field" id="dueDate">
+                    </div>
+                    <button class="btn" id="calculatePregnancy">
+                        <i class="fas fa-baby"></i> Calculate Pregnancy Progress
+                    </button>
+                </div>
+
+                <div class="card" id="pregnancyResults" style="display: none;">
+                    <h2 class="card-title">
+                        <i class="fas fa-chart-line"></i> Your Pregnancy Progress
+                    </h2>
+                    
+                    <div class="pregnancy-progress">
+                        <div class="pregnancy-weeks">
+                            <span class="current-week" id="currentPregnancyWeek">Week 12</span>
+                            <span class="total-weeks">of 40</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="pregnancyProgress" style="width: 30%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="trimester-info">
+                        <div class="trimester" id="trimester1">
+                            <div class="trimester-number">1st</div>
+                            <div class="trimester-weeks">Weeks 1-12</div>
+                        </div>
+                        <div class="trimester" id="trimester2">
+                            <div class="trimester-number">2nd</div>
+                            <div class="trimester-weeks">Weeks 13-27</div>
+                        </div>
+                        <div class="trimester" id="trimester3">
+                            <div class="trimester-number">3rd</div>
+                            <div class="trimester-weeks">Weeks 28-40</div>
+                        </div>
+                    </div>
+                    
+                    <div class="prediction-card pregnancy" style="margin-top: 16px;">
+                        <i class="fas fa-calendar"></i>
+                        <div class="prediction-date" id="dueDateDisplay">Jan 15, 2024</div>
+                        <div class="prediction-label">Estimated Due Date</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-info-circle"></i> This Week's Development
+                    </h2>
+                    <div id="pregnancyTips">
+                        <p>Your baby is about the size of a plum! Key developments this week include:</p>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Reflexes are developing</li>
+                            <li>Baby can make fist movements</li>
+                            <li>Critical organs are fully formed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hospital Locator Screen -->
+            <div class="screen" id="hospitalScreen">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-hospital"></i> Find Healthcare Providers
+                    </h2>
+                    <div class="input-group">
+                        <label class="input-label">Search Location</label>
+                        <input type="text" class="input-field" id="locationSearch" placeholder="Enter your city or zip code" value="New York">
+                    </div>
+                    <button class="btn" id="searchHospitals">
+                        <i class="fas fa-search"></i> Search Hospitals
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-map-marker-alt"></i> Nearby Hospitals & Clinics
+                    </h2>
+                    <div class="hospital-list" id="hospitalList">
+                        <!-- Hospital list will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Screen -->
+            <div class="screen" id="reportsScreen">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-chart-bar"></i> Cycle History
+                    </h2>
+                    <div class="chart-container">
+                        <div class="chart" id="cycleChart">
+                            <!-- Chart will be generated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-chart-pie"></i> Symptom Patterns
+                    </h2>
+                    <div id="symptomInsights">
+                        <!-- Insights will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Screen -->
+            <div class="screen" id="settingsScreen">
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-cog"></i> App Settings
+                    </h2>
+                    <div class="setting-item">
+                        <div>Dark Mode</div>
+                        <label class="toggle">
+                            <input type="checkbox" id="darkModeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div>Notifications</div>
+                        <label class="toggle">
+                            <input type="checkbox" id="notificationsToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div>Health Insights</div>
+                        <label class="toggle">
+                            <input type="checkbox" id="insightsToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-shield-alt"></i> Data & Privacy
+                    </h2>
+                    <p style="margin-bottom: 16px; font-size: 0.9rem;">Your data is stored locally on your device and is never shared with third parties.</p>
+                    <button class="btn btn-secondary" id="exportData">
+                        <i class="fas fa-download"></i> Export My Data
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">
+                        <i class="fas fa-info-circle"></i> About Bloom
+                    </h2>
+                    <p style="margin-bottom: 12px;">Version 1.0.0</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">Bloom helps you track your feminine health with privacy and care.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" data-screen="homeScreen">
+                <i class="fas fa-home nav-icon"></i>
+                <span class="nav-label">Home</span>
+            </div>
+            <div class="nav-item" data-screen="ovulationScreen">
+                <i class="fas fa-calendar nav-icon"></i>
+                <span class="nav-label">Cycle</span>
+            </div>
+            <div class="nav-item" data-screen="pregnancyScreen">
+                <i class="fas fa-baby nav-icon"></i>
+                <span class="nav-label">Pregnancy</span>
+            </div>
+            <div class="nav-item" data-screen="hospitalScreen">
+                <i class="fas fa-hospital nav-icon"></i>
+                <span class="nav-label">Hospitals</span>
+            </div>
+            <div class="nav-item" data-screen="settingsScreen">
+                <i class="fas fa-cog nav-icon"></i>
+                <span class="nav-label">Settings</span>
+            </div>
+        </nav>
     </div>
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="bottom-nav-item">
-            <i class="fas fa-home"></i>
-            <span>Gida</span>
-        </a>
-        <a href="ovulation.html" class="bottom-nav-item">
-            <i class="fas fa-venus-mars"></i>
-            <span>Ovulation</span>
-        </a>
-        <a href="tracker.html" class="bottom-nav-item">
-            <i class="fas fa-baby-carriage"></i>
-            <span>Bibiyar Ciki</span>
-        </a>
-        <a href="hospital.html" class="bottom-nav-item">
-            <i class="fas fa-hospital"></i>
-            <span>Asibiti</span>
-        </a>
-        <a href="kasuwa.html" class="bottom-nav-item">
-            <i class="fas fa-shopping-cart"></i>
-            <span>Kasuwa</span>
-        </a>
-    </nav>
- 
-    <!-- Hero Section -->
-    <section class="hero" data-aos="fade">
-        <div class="hero-content">
-            <h1>Jagora Ga Masu <br><span class="highlight">Ciki Da Raino</span></h1>
-            <p class="hero-subtitle">Domin samun ingantaccen bayani game da 
-                lafiyar uwa da jariri, tun daga lokacin daukar ciki har zuwa
-                rainon yaro tare da kayan aiki da shawarwari masu amfani daga masana.</p>
-        
-            <a class="btn btn-primary" onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">
-                Fara Yanzu <i class="fas fa-arrow-down"></i>
-            </a>
-            
-            <a class="btn btn-primary1"  href="hospital.html">
-              <i class="fas fa-search-location"></i>  Nemo Asibiti 
-            </a>
-        </div>
-        <div class="hero-image">
-            <img src="file_00000000f32061f4a54eb8806b82d541.png" alt="Happy pregnant woman" loading="lazy">
-        </div>
-    </section>
-
-    <!-- Partners Section -->
-    <section class="partners" data-aos="fade" style="display: none;">
-        <div class="partners-container">
-            <h2 class="section-title"><i class="fas fa-handshake"></i> Masu Daukar Nauyi</h2>
-            <p class="section-subtitle">Mun yi aiki tare da manyan ƙungiyoyi don samar da ingantaccen bayani</p>
-            <div class="partners-grid">
-                <div class="partner-logo">
-                    <img src="https://picsum.photos/150/80?random=1" alt="Partner 1" loading="lazy">           
-                </div>
-                <div class="partner-logo">
-                    <img src="https://logo.clearbit.com/who.int" alt="WHO" loading="lazy">
-                </div>
-                <div class="partner-logo">
-                    <img src="https://logo.clearbit.com/redcross.org" alt="Red Cross" loading="lazy">
-                </div>
-                <div class="partner-logo">
-                    <img src="https://logo.clearbit.com/health.gov" alt="Ministry of Health" loading="lazy">
-                </div>
-                <div class="partner-logo">
-                    <img src="https://logo.clearbit.com/amref.org" alt="AMREF" loading="lazy">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features" data-aos="fade-up" style="display: block;">
-        <div class="container">
-            <h2 class="section-title"><i class="fas fa-star"></i> Shirye-Shiryen Mu</h2>
-            <p class="section-subtitle">Kayan aikinmu na musamman don taimakawa a kowane mataki 
-                na tafiyar ku</p>
-            <div class="features-grid">
-                <a href="ovulation.html" class="feature-link">
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="feature-icon">
-                            <i class="fas fa-egg"></i>
-                        </div>
-                        <h3>Kalkuletar Ovulation</h3>
-                        <p>Hasasho kwanakin da zaku iya daukar ciki da kwanakin ovulation cikin sauki.</p>
-                        <button class="btn btn-secondary">Gwada Yanzu</button>
-                    </div>
-                </a>
-                <a href="tracker.html" class="feature-link">
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="feature-icon">
-                            <i class="fas fa-baby-carriage"></i>
-                        </div>
-                        <h3>Kalkuletar Bibiyar Ciki</h3>
-                        <p>Bibiyi ci gaban jaririnki mako bayan mako tare da shawarwari na musamman da suka da ce.</p>
-                        <button class="btn btn-secondary">Fara Bibiya</button>
-                    </div>
-                </a>
-                <a href="#" class="feature-link">
-                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="feature-icon">
-                            <i class="fas fa-book-open"></i>
-                        </div>
-                        <h3>Karanta Makaloli</h3>
-                        <p>Karanta rubuttukamu akan lafiyar uwa da jaririnta a lokacin daukar ciki da raino.</p>
-                        <button class="btn btn-secondary">Karanta Yanzu</button>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-    
-    Articles Section
-    <section class="articles" id="articles" data-aos="fade-up" style="display: none;">
-
-            <h2 class="section-title"><i class="fas fa-newspaper"></i> Sabbin Makaloli</h2>
-            <p class="section-subtitle">Karanta sabbi makaloli tare da shawarwari daga masana mu</p>
-            <div class="articles-grid">
-                <div class="article-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1516589091380-5d6019716b4c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');" aria-label="Pregnant woman reading"></div>
-                    <div class="article-content">
-                        <span class="article-category">Shirin Daukar Ciki</span>
-                        <h3>Preparing for Pregnancy: A Complete Guide</h3>
-                        <p>Everything you need to know before you start trying to conceive.</p>
-                        <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                
-                <div class="article-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1530046339916-102c1e0adeae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');" aria-label="Pregnancy products"></div>
-                    <div class="article-content">
-                        <span class="article-category">Goyon Ciki</span>
-                        <h3>First Trimester Must-Haves</h3>
-                        <p>Essential products and tips to survive the first 12 weeks.</p>
-                        <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                
-                <div class="article-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');" aria-label="Healthy food"></div>
-                    <div class="article-content">
-                        <span class="article-category">Abinci mai Gina Jiki</span>
-                        <h3>Nutrition During Pregnancy</h3>
-                        <p>What to eat (and avoid) for a healthy pregnancy.</p>
-                        <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Newsletter Section -->
-    <section class="newsletter" data-aos="fade-up" style="display: none;">
-        <div class="container">
-            <h2 class="section-title"><i class="fas fa-envelope"></i> Kasance da Sabbin Labarai</h2>
-            <p class="section-subtitle">Yi rajista da jaridarmu don samun shawarwari da sabbin bayanai kan ciki a kowane mako.</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Shigar da adireshin email dinka" class="newsletter-input" required aria-label="Email address">
-                <button type="submit" class="newsletter-btn">Yi Rajista Yanzu</button>
-            </form>
-        </div>
-    </section>
-    
-    <!-- Testimonials Section -->
-    <section class="testimonials" data-aos="fade-up" style="display: none;">
-        <div class="container">
-            <h2 class="section-title"><i class="fas fa-quote-left"></i> Ra'ayin Mabiyanmu</h2>
-            <p class="section-subtitle">Abin da wasu mutane ke faɗa game da wannan manhaja</p>
-            <div class="testimonials-grid">
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Jaridar Ciki da Raino ta taimaka min sosai wajen saukaka min tafiyar goyon cikina karo na uku. Haka zalika sabbin bayanan da nake samu a kullum, suma sun taimaka min kwarai da gaske!"</p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Aisha M." class="testimonial-avatar">
-                        <div>
-                            <p class="testimonial-name">- Aisha M.</p>
-                            <p class="testimonial-location">Kano, Nigeria</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Kalkuletar Ovulation ta taimaka mana wajen samun ciki bayan watanni muna ta kokarin hakan amma ba a da ce ba, muna matukar godiya da wannan manhaja!"</p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Hassan Ma'aruf Danrimi" class="testimonial-avatar">
-                        <div>
-                            <p class="testimonial-name">- Hassan Ma'aruf Danrimi.</p>
-                            <p class="testimonial-location">Kaduna, Nigeria</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <p class="testimonial-text">"A matsayina na uwa a karo na farko, na karanta bayanan da aka samar a wannan shafin masu matukar amfani. na ba da shawarar ziyartarshi a kullum ga duk mai shirin daukar ciki, ko take dauke da ciki da kuma raino."</p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Dr. R. Mujahid" class="testimonial-avatar">
-                        <div>
-                            <p class="testimonial-name">- Dr. R. Mujahid</p>
-                            <p class="testimonial-location">Lagos, Nigeria</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- FAQ Section -->
-    <section class="faq" id="faq" data-aos="fade-up" style="display: none;">
-        <div class="container">
-            <h2 class="section-title"><i class="fas fa-question-circle"></i> Tambayoyin Da Aka Fi Yawan Yi</h2>
-            <p class="section-subtitle">Anan akwai amsoshin tambayoyin da aka fi yawan yi mana</p>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq1">
-                    <span>Yaya ingancin amfani da wannan kalkuletar ta Ovulation yake?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer" id="faq1">
-                    <p>Kalkuletar ovulation ɗinmu ta dogara ne da tsarin jinin al'ada na yau da kullum, kuma tana da kusan kashi 80-90% na sahihanci ga matan da jinin al'adarsu ba rikitacciya ba ce ba. Don samun sakamako mafi kyau, muna ba da shawarar ki rika bibiyar zafin jikin ki na asali da kuma yawan ruwan da ke fita daga farji tare da amfani da wannan kalkuleta.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq2">
-                    <span>Shin amfani da shafin ciki da raino kyauta ne?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer" id="faq2">
-                    <p>Eh! Yin amfani ko karanata duk wani rubutu kyauta ne a wannan jaridar.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)" aria-expanded="false" aria-controls="faq3">
-                    <span>Shin zan iya nima amfani da wannan shafin duk da cewa bani da ciki?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer" id="faq3">
-                    <p>Tabbas kuwa! Kalkuletan ovulation ɗinmu dama sauran rubututtukanmu an tsara su ne musamman don mata da ke ƙoƙarin samun ciki.
-Yawancin masu amfani da shafinmu suna fara amfani da waɗannan kayan aiki tun kafin su sami ciki.
-</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-   <footer class="footer"  style="display: none;">
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-about">
-                    <h3>Ciki da Raino</h3>
-                    <p>Jarida domin lafiyar uwa da ta jariri</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
-                    </div>
-                </div>
-                <div class="footer-links">
-                    <h4>Hanyoyin Hanya</h4>
-                    <ul>
-                        <li><a href="index.html">Shafin Gida</a></li>
-                        <li><a href="about.html">Game Da Mu</a></li>
-                        <li><a href="blog.html">Labarai</a></li>
-                        <li><a href="contact.html">Tuntuɓe Mu</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Kayan Aiki</h4>
-                    <ul>
-                        <li><a href="ovulation.html">Kalkuletar Ovulation</a></li>
-                        <li><a href="tracker.html">Bibiyar Ciki</a></li>
-                        <li><a href="hospital.html">Asibitoci Mafi Kusa</a></li>
-                    </ul>
-                </div>
-                <div class="footer-newsletter">
-                    <h4>Kasance da Sabbin Labarai</h4>
-                    <form class="footer-newsletter-form">
-                        <input type="email" placeholder="Adireshin email" required aria-label="Email address">
-                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                    </form>
-                </div>
-            </div>
-            <div class="copyright">
-                <p style="color: aliceblue;">&copy; <span id="year"></span> Yar'aro Creative. All rights reserved.</p>
-                <div class="footer-legal">
-                    <a href="#">07062121414</a>
-                    <a href="#">cikidarainocommunity@gmail.com</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-  
-</hide>
-    <!-- JavaScript -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            offset: 100,
-            once: true
+        // App State
+        const appState = {
+            cycleLength: 28,
+            periodLength: 5,
+            lastPeriodDate: new Date(new Date().setDate(new Date().getDate() - 12)),
+            lmpDate: null,
+            dueDate: null,
+            currentDate: new Date(),
+            trackedData: {},
+            settings: {
+                darkMode: false,
+                notifications: true,
+                insights: true
+            }
+        };
+
+        // Daily Tips
+        const dailyTips = [
+            "Stay hydrated to help reduce bloating during your period.",
+            "Light exercise can help alleviate menstrual cramps.",
+            "Track your basal body temperature for more accurate ovulation prediction.",
+            "Consider taking a magnesium supplement to reduce PMS symptoms.",
+            "Practice stress-reduction techniques like meditation or yoga.",
+            "Eat iron-rich foods during your period to replenish iron stores.",
+            "Keep a consistent sleep schedule to help regulate your cycle.",
+            "Limit caffeine intake if you experience breast tenderness before your period."
+        ];
+
+        // Pregnancy Tips by Week
+        const pregnancyTips = {
+            12: "Your baby is about the size of a plum! Key developments this week include reflexes developing, ability to make fist movements, and critical organs being fully formed.",
+            16: "Your baby is now the size of an avocado. You might start feeling fluttering movements as the baby becomes more active.",
+            20: "You're halfway there! Your baby can now hear sounds and is developing taste buds.",
+            24: "Your baby is about the size of an ear of corn. The lungs are developing rapidly now.",
+            28: "Third trimester begins! Your baby can blink and has eyelashes. Brain development is accelerating.",
+            32: "Your baby is gaining weight rapidly. Most of the major development is complete now.",
+            36: "Your baby is almost ready for birth! Most babies position themselves head-down this week.",
+            40: "Your due date is here! Baby is fully developed and ready to meet you."
+        };
+
+        // Sample Hospital Data
+        const hospitals = [
+            {
+                name: "City General Hospital",
+                address: "123 Medical Center Dr, New York, NY 10001",
+                phone: "(555) 123-4567",
+                distance: "0.8 miles",
+                services: ["OB-GYN", "Emergency", "Pediatrics"]
+            },
+            {
+                name: "Women's Health Center",
+                address: "456 Wellness Ave, New York, NY 10002",
+                phone: "(555) 234-5678",
+                distance: "1.2 miles",
+                services: ["OB-GYN", "Fertility", "Ultrasound"]
+            },
+            {
+                name: "Community Medical Center",
+                address: "789 Health St, New York, NY 10003",
+                phone: "(555) 345-6789",
+                distance: "2.1 miles",
+                services: ["OB-GYN", "Emergency", "Surgery"]
+            },
+            {
+                name: "Metropolitan Hospital",
+                address: "321 Care Blvd, New York, NY 10004",
+                phone: "(555) 456-7890",
+                distance: "3.5 miles",
+                services: ["OB-GYN", "NICU", "Emergency"]
+            }
+        ];
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAppState();
+            initializeNavigation();
+            initializeTheme();
+            initializeCalculators();
+            initializeHospitalLocator();
+            updateHomeScreen();
+            updateReportsScreen();
+            
+            // Set default dates
+            const today = new Date();
+            document.getElementById('lastPeriodDate').value = formatDateForInput(appState.lastPeriodDate);
+            document.getElementById('lmpDate').value = formatDateForInput(new Date(today.setDate(today.getDate() - 84))); // 12 weeks ago
         });
 
-        // Set current year in footer
-        document.getElementById('year').textContent = new Date().getFullYear();
+        // Load app state from localStorage
+        function loadAppState() {
+            const savedState = localStorage.getItem('bloomAppState');
+            if (savedState) {
+                const parsedState = JSON.parse(savedState);
+                appState.cycleLength = parsedState.cycleLength || 28;
+                appState.periodLength = parsedState.periodLength || 5;
+                appState.lastPeriodDate = parsedState.lastPeriodDate ? new Date(parsedState.lastPeriodDate) : new Date(new Date().setDate(new Date().getDate() - 12));
+                appState.lmpDate = parsedState.lmpDate ? new Date(parsedState.lmpDate) : null;
+                appState.dueDate = parsedState.dueDate ? new Date(parsedState.dueDate) : null;
+                appState.trackedData = parsedState.trackedData || {};
+                appState.settings = {...appState.settings, ...parsedState.settings};
+            }
+            
+            // Set input values
+            document.getElementById('cycleLength').value = appState.cycleLength;
+            document.getElementById('periodLength').value = appState.periodLength;
+            
+            // Set toggle states
+            document.getElementById('darkModeToggle').checked = appState.settings.darkMode;
+            document.getElementById('notificationsToggle').checked = appState.settings.notifications;
+            document.getElementById('insightsToggle').checked = appState.settings.insights;
+            
+            // Apply dark mode if enabled
+            if (appState.settings.darkMode) {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+            }
+            
+            // Set daily tip
+            const randomTip = dailyTips[Math.floor(Math.random() * dailyTips.length)];
+            document.getElementById('dailyTip').innerHTML = `<i class="fas fa-lightbulb"></i> Today's tip: ${randomTip}`;
+        }
 
-        // Mobile Menu Toggle
-        const hamburger = document.getElementById('hamburger');
-        const closeMenu = document.getElementById('close-menu');
-        const mobileMenuContainer = document.getElementById('mobile-menu-container');
-        const overlay = document.getElementById('overlay');
-        
-        hamburger.addEventListener('click', function() {
-            mobileMenuContainer.classList.add('open');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        
-        closeMenu.addEventListener('click', function() {
-            mobileMenuContainer.classList.remove('open');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        
-        overlay.addEventListener('click', function() {
-            mobileMenuContainer.classList.remove('open');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        
-        // Close menu when clicking on a link
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenuContainer.classList.remove('open');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
+        // Save app state to localStorage
+        function saveAppState() {
+            localStorage.setItem('bloomAppState', JSON.stringify(appState));
+        }
+
+        // Navigation
+        function initializeNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const screens = document.querySelectorAll('.screen');
+            const featureCards = document.querySelectorAll('.feature-card');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const targetScreen = item.getAttribute('data-screen');
+                    switchScreen(targetScreen);
+                });
             });
-        });
+            
+            featureCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const targetScreen = card.getAttribute('data-screen');
+                    switchScreen(targetScreen);
+                    
+                    // Update active nav item
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    document.querySelector(`.nav-item[data-screen="${targetScreen}"]`).classList.add('active');
+                });
+            });
+        }
         
-        // FAQ Toggle Function
-        function toggleFAQ(question) {
-            const answer = question.nextElementSibling;
-            const icon = question.querySelector('i');
-            const isExpanded = question.getAttribute('aria-expanded') === 'true';
+        function switchScreen(screenId) {
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
             
-            question.setAttribute('aria-expanded', !isExpanded);
-            answer.classList.toggle('active');
-            
-            if (answer.classList.contains('active')) {
-                icon.classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-up');
-            } else {
-                icon.classList.remove('fa-chevron-up');
-                icon.classList.add('fa-chevron-down');
+            // Update specific screens when navigated to
+            if (screenId === 'ovulationScreen') {
+                initializeCalendar();
+            } else if (screenId === 'reportsScreen') {
+                updateReportsScreen();
+            } else if (screenId === 'hospitalScreen') {
+                renderHospitals();
             }
         }
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
+        // Theme Toggle
+        function initializeTheme() {
+            const themeToggle = document.getElementById('themeToggle');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            
+            themeToggle.addEventListener('click', toggleDarkMode);
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+        }
+        
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            
+            themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            appState.settings.darkMode = isDarkMode;
+            saveAppState();
+        }
+
+        // Calculator Functions
+        function initializeCalculators() {
+            // Cycle calculator
+            const calculateCycleBtn = document.getElementById('calculateCycle');
+            const cycleLengthInput = document.getElementById('cycleLength');
+            const cycleLengthError = document.getElementById('cycleLengthError');
+            
+            calculateCycleBtn.addEventListener('click', calculateCycle);
+            
+            cycleLengthInput.addEventListener('input', function() {
+                const value = parseInt(this.value);
+                if (value < 21 || value > 35) {
+                    cycleLengthError.style.display = 'block';
+                } else {
+                    cycleLengthError.style.display = 'none';
+                }
+            });
+            
+            // Pregnancy calculator
+            const calculatePregnancyBtn = document.getElementById('calculatePregnancy');
+            calculatePregnancyBtn.addEventListener('click', calculatePregnancy);
+            
+            // Initialize calendar
+            initializeCalendar();
+        }
+        
+        function calculateCycle() {
+            const lastPeriodDate = new Date(document.getElementById('lastPeriodDate').value);
+            const cycleLength = parseInt(document.getElementById('cycleLength').value);
+            const periodLength = parseInt(document.getElementById('periodLength').value);
+            
+            // Validate inputs
+            if (!lastPeriodDate || isNaN(lastPeriodDate.getTime())) {
+                alert('Please enter a valid last period date');
+                return;
+            }
+            
+            if (cycleLength < 21 || cycleLength > 35) {
+                alert('Cycle length must be between 21 and 35 days');
+                return;
+            }
+            
+            // Update app state
+            appState.lastPeriodDate = lastPeriodDate;
+            appState.cycleLength = cycleLength;
+            appState.periodLength = periodLength;
+            saveAppState();
+            
+            // Calculate cycle information
+            const today = new Date();
+            const cycleDay = Math.floor((today - lastPeriodDate) / (1000 * 60 * 60 * 24)) + 1;
+            const ovulationDay = Math.floor(cycleLength / 2);
+            const fertileStart = ovulationDay - 5;
+            const fertileEnd = ovulationDay;
+            
+            // Calculate dates
+            const nextOvulationDate = new Date(lastPeriodDate);
+            nextOvulationDate.setDate(lastPeriodDate.getDate() + ovulationDay);
+            
+            const fertileStartDate = new Date(lastPeriodDate);
+            fertileStartDate.setDate(lastPeriodDate.getDate() + fertileStart);
+            
+            const fertileEndDate = new Date(lastPeriodDate);
+            fertileEndDate.setDate(lastPeriodDate.getDate() + fertileEnd);
+            
+            // Update UI
+            document.getElementById('ovulationDate').textContent = formatDisplayDate(nextOvulationDate);
+            document.getElementById('fertileWindow').textContent = `${formatDisplayDate(fertileStartDate)}-${formatDisplayDate(fertileEndDate).split(' ')[1]}`;
+            document.getElementById('currentCycleDay').textContent = `Day ${cycleDay}`;
+            document.getElementById('totalCycleDays').textContent = `of ${cycleLength}`;
+            document.getElementById('cycleProgress').style.width = `${(cycleDay / cycleLength) * 100}%`;
+            
+            // Show results
+            document.getElementById('cycleResults').style.display = 'block';
+            
+            // Update calendar
+            renderCalendar();
+            
+            // Update home screen
+            updateHomeScreen();
+        }
+        
+        function calculatePregnancy() {
+            let lmpDate = new Date(document.getElementById('lmpDate').value);
+            let dueDate = new Date(document.getElementById('dueDate').value);
+            
+            // Validate inputs
+            if (!lmpDate || isNaN(lmpDate.getTime())) {
+                if (!dueDate || isNaN(dueDate.getTime())) {
+                    alert('Please enter either your last menstrual period or due date');
+                    return;
+                } else {
+                    // Calculate LMP from due date
+                    lmpDate = new Date(dueDate);
+                    lmpDate.setDate(lmpDate.getDate() - 280); // 40 weeks * 7 days
+                    document.getElementById('lmpDate').value = formatDateForInput(lmpDate);
+                }
+            } else {
+                // Calculate due date from LMP
+                dueDate = new Date(lmpDate);
+                dueDate.setDate(dueDate.getDate() + 280); // 40 weeks * 7 days
+                document.getElementById('dueDate').value = formatDateForInput(dueDate);
+            }
+            
+            // Update app state
+            appState.lmpDate = lmpDate;
+            appState.dueDate = dueDate;
+            saveAppState();
+            
+            // Calculate pregnancy progress
+            const today = new Date();
+            const pregnancyDays = Math.floor((today - lmpDate) / (1000 * 60 * 60 * 24));
+            const pregnancyWeeks = Math.floor(pregnancyDays / 7);
+            const pregnancyProgress = (pregnancyDays / 280) * 100;
+            
+            // Update UI
+            document.getElementById('currentPregnancyWeek').textContent = `Week ${pregnancyWeeks}`;
+            document.getElementById('pregnancyProgress').style.width = `${pregnancyProgress}%`;
+            document.getElementById('dueDateDisplay').textContent = formatFullDate(dueDate);
+            
+            // Update trimesters
+            document.getElementById('trimester1').classList.remove('active');
+            document.getElementById('trimester2').classList.remove('active');
+            document.getElementById('trimester3').classList.remove('active');
+            
+            if (pregnancyWeeks <= 12) {
+                document.getElementById('trimester1').classList.add('active');
+            } else if (pregnancyWeeks <= 27) {
+                document.getElementById('trimester2').classList.add('active');
+            } else {
+                document.getElementById('trimester3').classList.add('active');
+            }
+            
+            // Update pregnancy tips
+            const tipWeek = Math.min(40, Math.max(12, pregnancyWeeks));
+            const tipKey = Object.keys(pregnancyTips).reduce((prev, curr) => {
+                return Math.abs(curr - tipWeek) < Math.abs(prev - tipWeek) ? curr : prev;
+            });
+            
+            document.getElementById('pregnancyTips').innerHTML = `
+                <p>Your baby is about the size of a plum! Key developments this week include:</p>
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    <li>Reflexes are developing</li>
+                    <li>Baby can make fist movements</li>
+                    <li>Critical organs are fully formed</li>
+                </ul>
+            `;
+            
+            // Show results
+            document.getElementById('pregnancyResults').style.display = 'block';
+            
+            // Update home screen
+            updateHomeScreen();
+        }
+
+        // Calendar Functions
+        function initializeCalendar() {
+            const prevMonthBtn = document.getElementById('prevMonth');
+            const nextMonthBtn = document.getElementById('nextMonth');
+            
+            prevMonthBtn.addEventListener('click', () => {
+                appState.currentDate.setMonth(appState.currentDate.getMonth() - 1);
+                renderCalendar();
+            });
+            
+            nextMonthBtn.addEventListener('click', () => {
+                appState.currentDate.setMonth(appState.currentDate.getMonth() + 1);
+                renderCalendar();
+            });
+            
+            renderCalendar();
+        }
+        
+        function renderCalendar() {
+            const calendarDays = document.getElementById('calendarDays');
+            const currentMonthYear = document.getElementById('currentMonthYear');
+            
+            const today = new Date();
+            const currentMonth = appState.currentDate.getMonth();
+            const currentYear = appState.currentDate.getFullYear();
+            
+            // Update month/year display
+            currentMonthYear.textContent = appState.currentDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            // Previous month days
+            const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
+            
+            let calendarHTML = '';
+            
+            // Previous month days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                calendarHTML += `<div class="calendar-day other-month">${prevMonthDays - i}</div>`;
+            }
+            
+            // Current month days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                let dayClass = 'calendar-day';
                 
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
+                // Determine day type based on cycle calculations
+                const dayType = getDayType(date);
+                dayClass += ` ${dayType}`;
                 
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
+                if (day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                    dayClass += ' today';
+                }
+                
+                calendarHTML += `<div class="${dayClass}" data-date="${formatDate(date)}">${day}</div>`;
+            }
+            
+            calendarDays.innerHTML = calendarHTML;
+            
+            // Add click event to calendar days
+            document.querySelectorAll('.calendar-day:not(.other-month)').forEach(day => {
+                day.addEventListener('click', () => {
+                    const dateStr = day.getAttribute('data-date');
+                    alert(`Selected date: ${formatDisplayDate(new Date(dateStr))}`);
+                    // In a full app, this would open a detailed view for that day
+                });
+            });
+        }
+        
+        function getDayType(date) {
+            // If we have pregnancy data, show pregnancy days
+            if (appState.lmpDate) {
+                const pregnancyDays = Math.floor((date - appState.lmpDate) / (1000 * 60 * 60 * 24));
+                if (pregnancyDays >= 0 && pregnancyDays <= 280) {
+                    return 'pregnancy';
+                }
+            }
+            
+            // Otherwise, show cycle data
+            const cycleStart = new Date(appState.lastPeriodDate);
+            const cycleDay = Math.floor((date - cycleStart) / (1000 * 60 * 60 * 24)) + 1;
+            
+            if (cycleDay <= 0 || cycleDay > appState.cycleLength) {
+                return 'safe';
+            }
+            
+            // Period days (first few days of cycle)
+            if (cycleDay <= appState.periodLength) {
+                return 'period';
+            }
+            
+            // Ovulation day (typically around day 14 in a 28-day cycle)
+            const ovulationDay = Math.floor(appState.cycleLength / 2);
+            if (cycleDay === ovulationDay) {
+                return 'ovulation';
+            }
+            
+            // Fertile window (typically 5 days before ovulation)
+            const fertileStart = ovulationDay - 5;
+            const fertileEnd = ovulationDay;
+            if (cycleDay >= fertileStart && cycleDay <= fertileEnd) {
+                return 'fertile';
+            }
+            
+            return 'safe';
+        }
+
+        // Hospital Locator
+        function initializeHospitalLocator() {
+            const searchHospitalsBtn = document.getElementById('searchHospitals');
+            searchHospitalsBtn.addEventListener('click', renderHospitals);
+            
+            // Initial render
+            renderHospitals();
+        }
+        
+        function renderHospitals() {
+            const hospitalList = document.getElementById('hospitalList');
+            const location = document.getElementById('locationSearch').value || 'New York';
+            
+            hospitalList.innerHTML = '';
+            
+            hospitals.forEach(hospital => {
+                const hospitalItem = document.createElement('div');
+                hospitalItem.className = 'hospital-item';
+                
+                hospitalItem.innerHTML = `
+                    <div class="hospital-name">${hospital.name}</div>
+                    <div class="hospital-distance">${hospital.distance} away</div>
+                    <div class="hospital-address">${hospital.address}</div>
+                    <div class="hospital-phone">
+                        <i class="fas fa-phone"></i> ${hospital.phone}
+                    </div>
+                    <div class="hospital-services" style="margin-top: 8px; font-size: 0.8rem;">
+                        ${hospital.services.map(service => `<span style="background: var(--light); padding: 4px 8px; border-radius: 12px; margin-right: 4px;">${service}</span>`).join('')}
+                    </div>
+                `;
+                
+                hospitalList.appendChild(hospitalItem);
+            });
+        }
+
+        // Home Screen Updates
+        function updateHomeScreen() {
+            // Update cycle information
+            const cycleStart = new Date(appState.lastPeriodDate);
+            const today = new Date();
+            const cycleDay = Math.floor((today - cycleStart) / (1000 * 60 * 60 * 24)) + 1;
+            
+            // Calculate ovulation and fertile window
+            const ovulationDay = Math.floor(appState.cycleLength / 2);
+            const nextOvulationDate = new Date(cycleStart);
+            nextOvulationDate.setDate(cycleStart.getDate() + ovulationDay);
+            
+            document.getElementById('homeOvulationDate').textContent = formatDisplayDate(nextOvulationDate);
+            
+            // Update pregnancy information
+            if (appState.lmpDate) {
+                const pregnancyDays = Math.floor((today - appState.lmpDate) / (1000 * 60 * 60 * 24));
+                const pregnancyWeeks = Math.floor(pregnancyDays / 7);
+                document.getElementById('homePregnancyWeek').textContent = `Week ${pregnancyWeeks}`;
+            }
+        }
+
+        // Reports Screen Updates
+        function updateReportsScreen() {
+            updateCycleChart();
+            updateSymptomInsights();
+        }
+        
+        function updateCycleChart() {
+            const chart = document.getElementById('cycleChart');
+            chart.innerHTML = '';
+            
+            // Generate sample data for the last 4 months
+            const months = ['Aug', 'Sep', 'Oct', 'Nov'];
+            const cycleData = [70, 85, 60, 75]; // Sample cycle regularity percentages
+            
+            months.forEach((month, index) => {
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.height = `${cycleData[index]}%`;
+                
+                // Add color based on sample data
+                if (index === 0) bar.classList.add('fertile');
+                if (index === 1) bar.classList.add('ovulation');
+                if (index === 2) bar.classList.add('period');
+                
+                const label = document.createElement('div');
+                label.className = 'chart-label';
+                label.textContent = month;
+                
+                bar.appendChild(label);
+                chart.appendChild(bar);
+            });
+        }
+        
+        function updateSymptomInsights() {
+            const insightsContainer = document.getElementById('symptomInsights');
+            insightsContainer.innerHTML = '';
+            
+            // Sample insights
+            const insights = [
+                {
+                    icon: 'fas fa-head-side-virus',
+                    title: 'Headaches',
+                    description: 'Most common 2 days before period'
+                },
+                {
+                    icon: 'fas fa-cramped',
+                    title: 'Cramps',
+                    description: 'Typically last 3 days during period'
+                },
+                {
+                    icon: 'fas fa-tint',
+                    title: 'Cervical Mucus',
+                    description: 'Egg-white consistency around ovulation'
+                }
+            ];
+            
+            insights.forEach(insight => {
+                const insightItem = document.createElement('div');
+                insightItem.className = 'insight-item';
+                
+                insightItem.innerHTML = `
+                    <div class="insight-icon">
+                        <i class="${insight.icon}"></i>
+                    </div>
+                    <div class="insight-text">
+                        <div class="insight-title">${insight.title}</div>
+                        <div class="insight-desc">${insight.description}</div>
+                    </div>
+                `;
+                
+                insightsContainer.appendChild(insightItem);
+            });
+        }
+
+        // Utility Functions
+        function formatDate(date) {
+            return date.toISOString().split('T')[0];
+        }
+        
+        function formatDateForInput(date) {
+            return formatDate(date);
+        }
+        
+        function formatDisplayDate(date) {
+            return date.toLocaleString('default', { month: 'short', day: 'numeric' });
+        }
+        
+        function formatFullDate(date) {
+            return date.toLocaleString('default', { month: 'long', day: 'numeric', year: 'numeric' });
+        }
+
+        // PWA Installation
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
                     });
-                }
             });
-        });
+        }
 
-        // Active nav link highlighting
-        document.addEventListener('DOMContentLoaded', function () {
-            const navItems = document.querySelectorAll('.bottom-nav .nav-item');
-            const currentPage = window.location.pathname.split('/').pop();
-
-            navItems.forEach(link => {
-                const linkPage = link.getAttribute('href');
-                if (linkPage === currentPage) {
-                    link.classList.add('active');
-                }
-            });
+        // Export Data
+        document.getElementById('exportData').addEventListener('click', function() {
+            const dataStr = JSON.stringify(appState, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'bloom-health-data.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            alert('Your data has been exported successfully!');
         });
     </script>
 </body>
 </html>
-
